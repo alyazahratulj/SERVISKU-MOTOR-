@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>servisku (servis motor)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F8FF;--card:#fff;--ink:#12294F;--mut:#4f5f7a;--pri:#1D6BE0;--soft:#E6F0FF;--line:#d3e0f4;--ok:#16794a;--okbg:#e0f4e9;--err:#c62828;--cy:#35D4F0;--navy:#12294F;--onnavy:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1730;--card:#15233f;--ink:#e8f0ff;--mut:#9fb2d4;--pri:#3a7ef0;--soft:#1b2f57;--line:#2a3c61;--ok:#6fdba3;--okbg:#123a2b;--err:#ff8a80;--navy:#1b2f57;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1730;--card:#15233f;--ink:#e8f0ff;--mut:#9fb2d4;--pri:#3a7ef0;--soft:#1b2f57;--line:#2a3c61;--ok:#6fdba3;--okbg:#123a2b;--err:#ff8a80;--navy:#1b2f57;color-scheme:dark}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:400 16px/1.5 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;margin:0 0 .5rem;line-height:1.25}
+h1{font-size:1.5rem}h2{font-size:1.2rem}h3{font-size:1.05rem}
+p{margin:0 0 .6rem}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cy);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.top .in{max-width:1180px;margin:auto;display:flex;align-items:center;gap:1rem;padding:.6rem 1rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
+.logo{font:700 1.2rem Poppins;color:var(--pri);background:none;border:0;cursor:pointer;padding:0}
+.sp{flex:1}
+.nav{display:none;gap:.25rem}
+.nav button{background:none;border:0;padding:.55rem .8rem;cursor:pointer;font-weight:500;color:var(--mut);border-bottom:3px solid transparent}
+.nav button[aria-current=page]{color:var(--pri);border-color:var(--pri)}
+.srch{display:none;width:230px}
+.bell{position:relative;background:var(--soft);border:0;border-radius:10px;min-width:44px;height:44px;cursor:pointer;font-size:1.1rem}
+.bell b{position:absolute;top:-4px;right:-4px;background:var(--err);color:#fff;font-size:.72rem;border-radius:99px;padding:0 6px;min-width:20px}
+.bn{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:6}
+.bn button{flex:1;background:none;border:0;padding:.55rem 0 .5rem;font-size:.75rem;color:var(--mut);cursor:pointer;min-height:56px}
+.bn button span{display:block;font-size:1.25rem}
+.bn button[aria-current=page]{color:var(--pri);font-weight:600}
+main{max-width:1180px;margin:auto;padding:1rem 1rem 6rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem;margin-bottom:.9rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.5rem 1.1rem;border-radius:10px;border:2px solid var(--pri);background:var(--pri);color:#fff;font-weight:600;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn.blk{width:100%}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.danger{border-color:var(--err);background:transparent;color:var(--err)}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:.9rem}
+.chips{display:flex;gap:.5rem;overflow-x:auto;padding:.2rem 0 .6rem}
+.chip{white-space:nowrap;border:2px solid var(--line);background:var(--card);border-radius:99px;padding:.4rem .9rem;cursor:pointer;min-height:40px}
+.chip[aria-pressed=true],.chip.on{border-color:var(--pri);background:var(--soft);font-weight:600}
+.chip[disabled]{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.hero{background:var(--navy);color:var(--onnavy);border-radius:16px;padding:1.1rem}
+.hero .eta{font:700 1.6rem Poppins;color:var(--cy)}
+.badge{display:inline-block;border-radius:99px;padding:.1rem .7rem;font-size:.85rem;font-weight:600;background:var(--soft);color:var(--pri)}
+.badge.ok{background:var(--okbg);color:var(--ok)}.badge.bad{background:#fde4e4;color:#b71c1c}
+.price{font-weight:600;color:var(--pri)}
+.mut{color:var(--mut);font-size:.92rem}
+input[type=text],input[type=email],input[type=tel],input[type=password],select,textarea{width:100%;min-height:44px;padding:.55rem .8rem;border:2px solid var(--line);border-radius:10px;background:var(--card)}
+label{display:block;font-weight:600;margin:.6rem 0 .25rem}
+.steps{display:flex;gap:.3rem;margin-bottom:.4rem}
+.steps i{flex:1;height:6px;border-radius:9px;background:var(--line)}.steps i.on{background:var(--pri)}
+.crumb{font-size:.9rem;color:var(--mut);margin-bottom:.6rem}.crumb a{color:var(--pri);cursor:pointer;text-decoration:underline}
+.pick{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:.8rem;margin-bottom:.6rem;cursor:pointer}
+.pick[aria-pressed=true]{border-color:var(--pri);background:var(--soft)}
+.tl{display:flex;margin:.8rem 0}
+.tl div{flex:1;text-align:center;font-size:.82rem;color:var(--mut);position:relative}
+.tl div::before{content:"";display:block;width:26px;height:26px;margin:0 auto 4px;border-radius:50%;background:var(--line);line-height:26px;color:#fff}
+.tl .d::before{content:"✓";background:var(--ok)}.tl .c::before{content:"●";background:var(--pri)}.tl .c{color:var(--ink);font-weight:600}
+.tabs{display:flex;gap:.4rem;margin-bottom:.8rem}
+.tabs .chip{flex:1;text-align:center}
+.side{display:none}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.5rem;border-bottom:1px solid var(--line)}
+.wrap{overflow-x:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ok);color:#fff;padding:.6rem 1rem;border-radius:10px;z-index:20;max-width:90%}
+dialog{border:0;border-radius:16px;padding:1.2rem;max-width:420px;width:92%;background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.foot{display:none;border-top:1px solid var(--line);padding:1rem;text-align:center;font-size:.9rem;color:var(--mut)}
+.ok-box{text-align:center;padding:1.5rem 1rem}.code{font:700 1.5rem Poppins;color:var(--pri);letter-spacing:.05em}
+@media (min-width:860px){
+ .nav,.srch,.foot{display:flex}.srch{display:block}.bn{display:none}main{padding-bottom:2rem}.toast{bottom:1.5rem}
+ .g2{grid-template-columns:2fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(2,1fr)}
+ .lay{display:grid;grid-template-columns:230px 1fr;gap:1.2rem}.side{display:block}
+ .mtab{display:none}.foot{display:block}
+}
+.g2,.g3,.g4{display:grid;gap:.9rem}
+@media (max-width:859px){.g2,.g3,.g4{grid-template-columns:1fr}.hide-m{display:none}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+ <button class="logo" data-go="beranda" aria-label="SERVISKU, ke Beranda">🛵 SERVISKU</button>
+ <input class="srch" id="hs" type="text" placeholder="Cari layanan, mis. ganti oli" aria-label="Cari layanan">
+ <nav class="nav" id="nav" aria-label="Menu utama"></nav><span class="sp"></span>
+ <button class="bell" id="bell" aria-label="Notifikasi">🔔<b id="nb">2</b></button>
+</div></header>
+<main id="app"></main>
+<footer class="foot">Jl. Contoh No. 12, Padang · Senin–Sabtu 08.00–17.00 · WhatsApp admin: 0812-0000-0000 · Pembatalan gratis sebelum motor diperiksa</footer>
+<nav class="bn" id="bn" aria-label="Menu utama"></nav>
+<dialog id="dlg"></dialog>
+<div id="toast" class="toast" role="status" hidden></div>
+<script>
+const SV=[
+{id:'berkala',cat:'Berkala',n:'Servis Berkala',ic:'🔧',min:90,g:'7 hari',jasa:60000,part:25000,cp:['Cek & bersihkan filter udara','Setel rantai/CVT & rem','Cek kelistrikan & aki','Ganti busi bila perlu','Pengecekan 20 titik']},
+{id:'oli',cat:'Ganti Oli',n:'Ganti Oli Mesin',ic:'🛢️',min:30,g:'7 hari',jasa:15000,part:30000,cp:['Kuras oli lama','Oli mesin baru (0,8 L)','Cek kebocoran','Cek level oli setelah selesai']},
+{id:'rem',cat:'Rem',n:'Servis Rem',ic:'🛑',min:45,g:'14 hari',jasa:25000,part:35000,cp:['Cek kampas rem depan & belakang','Bersihkan kaliper/tromol','Ganti kampas bila tipis','Uji pengereman']},
+{id:'cvt',cat:'CVT',n:'Servis CVT',ic:'⚙️',min:120,g:'30 hari',jasa:60000,part:90000,cp:['Bongkar & bersihkan CVT','Cek V-belt & roller','Ganti oli gardan','Uji jalan'],tip:'CVT = sistem transmisi otomatis pada motor matik (Beat, NMAX, Vario).'}];
+const CATS=['Semua','Berkala','Ganti Oli','Rem','CVT'],ST=['Diterima','Pemeriksaan','Proses','Selesai'];
+const TIMES=['08.00','09.00','10.00','11.00','13.00','14.00','15.00','16.00'];
+const rp=n=>'Rp '+n.toLocaleString('id-ID'),svc=id=>SV.find(s=>s.id===id),tot=s=>s.jasa+s.part;
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DN=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],MN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const lbl=s=>{const d=new Date(s+'T00:00');return DN[d.getDay()]+', '+d.getDate()+' '+MN[d.getMonth()]+' '+d.getFullYear()};
+const today=new Date(),T0=iso(today);
+const def=()=>({profile:{nama:'Alya Zahratul Jannah',hp:'0812-3456-7890',email:'alya@email.com'},
+motors:[{id:1,nama:'Honda Beat',plat:'BH 5678 AB',main:true},{id:2,nama:'Yamaha NMAX',plat:'BH 2210 CD',main:false}],
+orders:[{code:'SRV-2611-014',motor:'Honda Beat',plat:'BH 5678 AB',svc:'oli',date:T0,time:'13.00',stage:2,note:'',eta:'Hari ini, 15.30'},
+{code:'SRV-2609-009',motor:'Honda Beat',plat:'BH 5678 AB',svc:'berkala',date:'2026-09-14',time:'09.00',stage:3,note:''},
+{code:'SRV-2607-021',motor:'Yamaha NMAX',plat:'BH 2210 CD',svc:'rem',date:'2026-07-02',time:'10.00',stage:3,note:''}],seen:false});
+let D;try{D=JSON.parse(localStorage.getItem('servisku-v1'))}catch(e){}
+if(!D||!D.orders)D=def();
+const save=()=>{try{localStorage.setItem('servisku-v1',JSON.stringify(D))}catch(e){}};
+let S={q:'',cat:'Semua',svc:null,step:1,ord:{},tab:'status',acct:'profil',done:null,pwd:false};
+const V=[['beranda','Beranda','🏠'],['layanan','Layanan','🔍'],['pesanan','Pesanan','📝'],['status','Status','⏱️'],['akun','Akun','👤']];
+const cur=()=>{const h=location.hash.slice(1);return V.some(v=>v[0]===h)?h:'beranda'};
+const $=s=>document.querySelector(s);
+function go(v){if(v==='layanan')S.svc=null;if(v==='pesanan'&&S.step===5)S.step=1;if(location.hash==='#'+v)render();else location.hash=v}
+function toast(t){const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2600)}
+function active(){return D.orders.filter(o=>o.stage>=0&&o.stage<3)}
+function main(){return D.motors.find(m=>m.main)||D.motors[0]}
+function etaOf(o){const s=svc(o.svc);if(o.eta)return o.eta;const h=parseInt(o.time)+Math.ceil(s.min/60);return lbl(o.date).split(',')[0]+', '+String(Math.min(h,18)).padStart(2,'0')+'.'+(s.min%60?'30':'00')}
+function activeCard(o,full){const s=svc(o.svc);return `<div class="hero"><div class="mut" style="color:#bcd">${esc(o.motor)} · ${esc(o.plat)} · ${o.code}</div>
+<div>Estimasi selesai</div><div class="eta">${etaOf(o)}</div><div>${s.n} — <b>${ST[o.stage]}</b></div></div>
+${full?`<div class="tl" role="list">${ST.map((t,i)=>`<div role="listitem" class="${i<o.stage?'d':i===o.stage?'c':''}">${t}</div>`).join('')}</div>`:''}`}
+const hdr=(t,b)=>`<div class="row" style="margin-bottom:.4rem">${b?`<button class="btn sec" data-back="${b}" aria-label="Kembali">←</button>`:''}<h1 style="margin:0">${t}</h1></div>`;
+function svcCard(s){return `<div class="card"><div class="row"><span style="font-size:1.8rem">${s.ic}</span><div style="flex:1"><h3 style="margin:0">${s.n}</h3><span class="mut">${s.min} menit · garansi ${s.g}</span></div></div>
+<p class="price" style="margin:.5rem 0">Mulai dari ${rp(tot(s))}</p><button class="btn sec" data-det="${s.id}">Lihat Detail</button></div>`}
+const stepper=n=>`<p class="mut" style="margin:0"><b>Langkah ${n} dari 4</b> · ${['Kendaraan','Layanan','Jadwal','Konfirmasi'].map((t,i)=>i+1===n?'<b style="color:var(--ink)">'+t+'</b>':t).join(' › ')}</p><div class="steps">${[1,2,3,4].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div>`;
+
+function vBeranda(){const a=active();return `<h1>Halo, ${esc(D.profile.nama.split(' ')[0])}!</h1>
+<div class="g2"><div>
+<div class="card" style="background:linear-gradient(120deg,var(--navy),var(--pri));color:#fff;border:0"><h2>Servis pertama hemat 30%</h2><p>Pakai kode <b style="font-size:1.2rem;color:var(--cy)">BARU30</b> · berlaku sampai 31 Des 2026</p></div>
+<h2>Kategori layanan</h2><div class="g4" style="grid-template-columns:repeat(2,1fr)">${SV.map(s=>`<button class="pick" style="margin:0" data-cat="${s.cat}"><span style="font-size:1.6rem">${s.ic}</span><br><b>${s.n}</b></button>`).join('')}</div>
+<h2 style="margin-top:1rem">Layanan populer</h2><div class="g3">${SV.slice(0,3).map(svcCard).join('')}</div></div>
+<div>${a.length?`<h2>Servis aktif</h2>${activeCard(a[0],false)}<button class="btn sec blk" style="margin:.6rem 0" data-go="status">Lihat status</button>`:'<div class="card">Belum ada servis aktif.</div>'}
+<button class="btn blk" data-go="pesanan" style="margin:.4rem 0 .9rem">Pesan Servis Sekarang</button>
+<div class="card"><h3>Jam operasional</h3><p class="mut">Senin–Sabtu 08.00–17.00<br>Minggu tutup<br>Jl. Contoh No. 12, Padang</p></div></div></div>`}
+
+function vLayanan(){
+if(S.svc){const s=svc(S.svc);return `<div class="crumb"><a data-back="layanan">Beranda</a> › <a data-back="layanan">Daftar Layanan</a> › ${s.n}</div>${hdr(s.ic+' '+s.n,'layanan')}
+<div class="g2"><div><div class="row" style="margin-bottom:.8rem"><span class="badge">⏱ ${s.min} menit</span><span class="badge ok">Garansi ${s.g}</span></div>
+<div class="card"><h3>Cakupan pekerjaan</h3><ul style="padding-left:1.2rem;margin:0">${s.cp.map(c=>`<li>✓ ${c}</li>`).join('')}</ul></div>
+${s.tip?`<div class="card">ℹ️ ${s.tip}</div>`:''}
+<div class="card"><h3>Ulasan pelanggan</h3><p class="mut">“Cepat dan harganya sesuai estimasi.” — Rina, Honda Vario</p></div></div>
+<div><div class="card"><h3>Estimasi biaya</h3><div class="row" style="justify-content:space-between"><span>Jasa</span><span>${rp(s.jasa)}</span></div><div class="row" style="justify-content:space-between"><span>Suku cadang</span><span>${rp(s.part)}</span></div><hr style="border:0;border-top:1px solid var(--line)"><div class="row price" style="justify-content:space-between"><span>Total estimasi</span><span>${rp(tot(s))}</span></div><p class="mut">Dibayar di bengkel setelah servis selesai.</p></div>
+<button class="btn blk" data-order="${s.id}">Pesan Layanan Ini</button></div></div>`}
+const q=S.q.toLowerCase(),L=SV.filter(s=>(S.cat==='Semua'||s.cat===S.cat)&&(s.n+' '+s.cat).toLowerCase().includes(q));
+return `<div class="crumb">Beranda › Daftar Layanan</div><h1>Daftar Layanan</h1>
+<input id="q" type="text" value="${esc(S.q)}" placeholder="Cari layanan, mis. ganti oli" aria-label="Cari layanan"><div class="row" style="margin:.4rem 0"><span class="mut">Populer:</span>${['ganti oli','rem','cvt'].map(k=>`<button class="chip" data-kw="${k}">${k}</button>`).join('')}</div>
+<div class="chips" role="group" aria-label="Kategori">${CATS.map(c=>`<button class="chip" aria-pressed="${S.cat===c}" data-cat="${c}">${c}</button>`).join('')}</div>
+${L.length?`<div class="g4">${L.map(svcCard).join('')}</div>`:'<div class="card">Tidak ada layanan untuk “'+esc(S.q)+'”. Coba kata kunci lain atau pilih kategori Semua.</div>'}`}
+
+function vPesanan(){const o=S.ord,st=S.step;
+if(st===5){const x=S.done;return `<div class="card ok-box"><div style="font-size:3rem">✅</div><h1>Pesanan Terkirim!</h1><p>Kode pesanan</p><div class="code">${x.code}</div><p class="mut">${esc(x.motor)} · ${svc(x.svc).n}<br>${lbl(x.date)}, ${x.time}</p><p class="mut">Notifikasi dikirim saat status berubah.</p><button class="btn" data-go="status">Lihat Status</button></div>`}
+if(!o.motor)o.motor=main().id;
+let body='';
+if(st===1)body=`<h2>Pilih motor</h2>${D.motors.map(m=>`<button class="pick" aria-pressed="${o.motor===m.id}" data-m="${m.id}"><b>${esc(m.nama)}</b> ${m.main?'<span class="badge">Utama</span>':''}<br><span class="mut">${esc(m.plat)}</span></button>`).join('')}<button class="btn sec" data-go="akun" data-acct="motor">+ Tambah motor baru</button>`;
+if(st===2)body=`<h2>Pilih layanan</h2>${SV.map(s=>`<button class="pick" aria-pressed="${o.svc===s.id}" data-s="${s.id}"><b>${s.ic} ${s.n}</b><br><span class="mut">${s.min} menit · ${rp(tot(s))}</span></button>`).join('')}`;
+if(st===3){const days=[];for(let i=1;days.length<14;i++){const d=new Date(today);d.setDate(d.getDate()+i);if(d.getDay())days.push(d)}
+body=`<h2>Pilih tanggal</h2><div class="chips" style="flex-wrap:wrap" role="group" aria-label="Tanggal">${days.map(d=>`<button class="chip" aria-pressed="${o.date===iso(d)}" data-d="${iso(d)}">${DN[d.getDay()]} ${d.getDate()} ${MN[d.getMonth()]}</button>`).join('')}</div>
+<h2>Pilih jam</h2><div class="row">${TIMES.map((t,i)=>`<button class="chip" aria-pressed="${o.time===t}" data-t="${t}" ${o.date&&(parseInt(o.date.slice(-2))+i)%7===0?'disabled':''}>${t}</button>`).join('')}</div><p class="mut">Jam yang dicoret sudah penuh.</p>
+<label for="nt">Catatan keluhan (opsional)</label><textarea id="nt" rows="3" placeholder="Mis. rem depan bunyi berdecit">${esc(o.note||'')}</textarea>`}
+if(st===4){const m=D.motors.find(x=>x.id===o.motor),s=svc(o.svc);body=`<h2>Ringkasan pesanan</h2><div class="card"><p><b>Motor</b><br>${esc(m.nama)} (${esc(m.plat)})</p><p><b>Layanan</b><br>${s.n}</p><p><b>Jadwal</b><br>${lbl(o.date)}, ${o.time}</p><p><b>Keluhan</b><br>${o.note?esc(o.note):'–'}</p><p class="price">Estimasi biaya: ${rp(tot(s))}</p><p class="mut">Pembatalan gratis sebelum motor diperiksa. Bayar di bengkel.</p></div>
+<label style="display:flex;gap:.6rem;align-items:center;font-weight:500"><input type="checkbox" id="ck" style="width:24px;height:24px" ${o.ok?'checked':''}> Data pesanan sudah benar</label>`}
+const can=st===1?o.motor:st===2?o.svc:st===3?o.date&&o.time:o.ok;
+const sum=(()=>{const s=svc(o.svc);return s?`<div class="card hide-m"><h3>Ringkasan</h3><p class="mut">${s.n}<br>${o.date?lbl(o.date):'Tanggal belum dipilih'}</p><p class="price">${rp(tot(s))}</p></div>`:''})();
+return `${hdr('Pesan Servis')}${stepper(st)}<div class="g2"><div>${body}<div class="row" style="margin-top:1rem">${st>1?'<button class="btn sec" data-prev>Kembali</button>':''}<button class="btn" style="flex:1" data-next ${can?'':'disabled'}>${st===4?'Kirim Pesanan':'Lanjutkan'}</button>${st===4?'<button class="btn sec" data-edit>Ubah Data</button>':''}</div></div><div>${sum}</div></div>`}
+
+function vStatus(){const a=active(),h=D.orders.filter(o=>o.stage===3||o.stage<0);
+const act=a.length?a.map(o=>`<div style="margin-bottom:1rem">${activeCard(o,true)}<div class="row"><button class="btn sec" data-wa>Hubungi Bengkel</button><button class="btn sec" data-adv="${o.code}">Simulasikan tahap berikutnya</button><button class="btn danger" data-cx="${o.code}">Batalkan</button></div></div>`).join(''):'<div class="card">Tidak ada servis aktif. <button class="btn" data-go="pesanan">Pesan servis</button></div>';
+const his=h.length?`<div class="wrap"><table><tr><th>Tanggal</th><th>Motor</th><th>Layanan</th><th>Biaya</th><th></th></tr>${h.map(o=>`<tr><td>${lbl(o.date).split(', ')[1]}</td><td>${esc(o.motor)}</td><td>${svc(o.svc).n}</td><td>${o.stage<0?'<span class="badge bad">Dibatalkan</span>':rp(tot(svc(o.svc)))}</td><td><button class="btn sec" data-again="${o.svc}">Pesan Lagi</button></td></tr>`).join('')}</table></div>`:'<p class="mut">Belum ada riwayat.</p>';
+return `<h1>Status & Riwayat</h1><div class="tabs mtab" role="tablist"><button class="chip" aria-pressed="${S.tab==='status'}" data-tab="status">Status</button><button class="chip" aria-pressed="${S.tab==='riwayat'}" data-tab="riwayat">Riwayat</button></div>
+<div class="lay"><aside class="side card" style="height:fit-content"><button class="pick" aria-pressed="${S.tab==='status'}" data-tab="status">Status aktif</button><button class="pick" aria-pressed="${S.tab==='riwayat'}" data-tab="riwayat">Riwayat</button><button class="pick" data-bell>Notifikasi</button></aside>
+<div>${S.tab==='status'?act+'<h2>Notifikasi bengkel</h2><div class="card mut">Motor Anda sedang dalam pengerjaan. Kami kabari saat selesai.</div>':'<h2>Riwayat servis</h2>'+his}</div></div>`}
+
+function vAkun(){const p=D.profile,t=S.acct,L=[['profil','Profil'],['motor','Data Kendaraan'],['sandi','Kata Sandi'],['keluar','Keluar']];
+let b='';
+if(t==='profil')b=`<h2>Profil</h2><label for="pn">Nama lengkap</label><input id="pn" type="text" value="${esc(p.nama)}"><label for="ph">Nomor HP</label><input id="ph" type="tel" value="${esc(p.hp)}"><label for="pe">Email</label><input id="pe" type="email" value="${esc(p.email)}"><div style="margin-top:1rem"><button class="btn" data-saveprof>Simpan Perubahan</button></div>`;
+if(t==='motor')b=`<h2>Data kendaraan</h2>${D.motors.map(m=>`<div class="card row"><div style="flex:1"><b>${esc(m.nama)}</b> ${m.main?'<span class="badge">Utama</span>':''}<br><span class="mut">${esc(m.plat)}</span></div>${m.main?'':`<button class="btn sec" data-mk="${m.id}">Jadikan utama</button><button class="btn danger" data-md="${m.id}" aria-label="Hapus ${esc(m.nama)}">Hapus</button>`}</div>`).join('')}<h3>Tambah motor</h3><label for="mn">Nama motor</label><input id="mn" type="text" placeholder="Mis. Honda Vario 125"><label for="mp">Plat nomor</label><input id="mp" type="text" placeholder="BH 1234 AB"><div style="margin-top:.8rem"><button class="btn" data-addm>+ Tambah Motor</button></div>`;
+if(t==='sandi')b=`<h2>Ubah kata sandi</h2><label for="p1">Kata sandi baru (min. 8 karakter)</label><input id="p1" type="password" autocomplete="new-password"><label for="p2">Ulangi kata sandi</label><input id="p2" type="password" autocomplete="new-password"><div style="margin-top:1rem"><button class="btn" data-pwd>Simpan Kata Sandi</button></div>`;
+if(t==='keluar')b=`<h2>Keluar</h2><p>Anda yakin ingin keluar dari SERVISKU?</p><button class="btn danger" data-logout>Keluar</button>`;
+return `<div class="card row"><div style="font-size:2.2rem">👤</div><div><b>${esc(p.nama)}</b><br><span class="mut">${esc(p.email)}</span></div></div><h1 style="display:none">Akun</h1>
+<div class="lay"><div class="side card" style="height:fit-content">${L.map(l=>`<button class="pick" aria-pressed="${t===l[0]}" data-acct="${l[0]}">${l[1]}</button>`).join('')}</div>
+<div><div class="tabs mtab" style="flex-wrap:wrap">${L.map(l=>`<button class="chip" aria-pressed="${t===l[0]}" data-acct="${l[0]}">${l[1]}</button>`).join('')}</div><div class="card">${b}</div></div></div>`}
+
+function render(){const v=cur();
+$('#nav').innerHTML=V.map(x=>`<button data-go="${x[0]}" ${x[0]===v?'aria-current="page"':''}>${x[1]}</button>`).join('');
+$('#bn').innerHTML=V.map(x=>`<button data-go="${x[0]}" ${x[0]===v?'aria-current="page"':''}><span aria-hidden="true">${x[2]}</span>${x[1]}</button>`).join('');
+$('#nb').hidden=D.seen;
+const f={beranda:vBeranda,layanan:vLayanan,pesanan:vPesanan,status:vStatus,akun:vAkun}[v];
+const keep=document.activeElement&&document.activeElement.id==='q';
+$('#app').innerHTML=f();document.title='servisku (servis motor)';
+if(keep){const q=$('#q');q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
+
+function dlg(h){const d=$('#dlg');d.innerHTML=h+'<form method="dialog" style="margin-top:.8rem"><button class="btn sec blk">Tutup</button></form>';d.showModal()}
+function readStep(){const n=$('#nt');if(n)S.ord.note=n.value;const c=$('#ck');if(c)S.ord.ok=c.checked}
+function send(){const o=S.ord,m=D.motors.find(x=>x.id===o.motor);
+const x={code:'SRV-'+String(today.getFullYear()).slice(2)+String(today.getMonth()+1).padStart(2,'0')+'-'+String(Math.floor(Math.random()*900)+100),motor:m.nama,plat:m.plat,svc:o.svc,date:o.date,time:o.time,note:o.note||'',stage:0};
+D.orders.unshift(x);save();S.done=x;S.step=5;S.ord={};render();window.scrollTo(0,0)}
+
+document.addEventListener('click',e=>{const t=e.target.closest('button,a');if(!t)return;const d=t.dataset;
+if(t.id==='bell'||'bell' in d){D.seen=true;save();render();return dlg('<h2>Notifikasi</h2><div class="card">📣 Servis motor Anda sedang diproses.</div><div class="card">🎟️ Kode BARU30 hemat 30% untuk servis pertama.</div>')}
+if(d.go){if(d.acct)S.acct=d.acct;if(d.go==='pesanan'&&!d.keep){S.ord={};S.step=1}go(d.go);window.scrollTo(0,0);return}
+if(d.back){S.svc=null;go(d.back);return}
+if(d.det){S.svc=d.det;if(cur()!=='layanan')location.hash='layanan';render();window.scrollTo(0,0);return}
+if(d.cat){S.cat=d.cat;S.svc=null;go('layanan');return}
+if(d.kw){S.q=d.kw;render();return}
+if(d.order){S.ord={motor:main().id,svc:d.order};S.step=3;go('pesanan');window.scrollTo(0,0);return}
+if(d.again){S.ord={motor:main().id,svc:d.again};S.step=3;go('pesanan');return}
+if(d.m){S.ord.motor=+d.m;render();return}
+if(d.s){S.ord.svc=d.s;render();return}
+if(d.d){readStep();S.ord.date=d.d;S.ord.time=null;render();return}
+if(d.t!==undefined){readStep();S.ord.time=d.t;render();return}
+if('next' in d){readStep();if(S.step===4){if(S.ord.ok)send();return}S.step++;render();window.scrollTo(0,0);return}
+if('prev' in d){readStep();S.step--;render();return}
+if('edit' in d){S.ord.ok=false;S.step=3;render();return}
+if(d.tab){S.tab=d.tab;render();return}
+if(d.acct){S.acct=d.acct;render();return}
+if('wa' in d)return dlg('<h2>Hubungi bengkel</h2><p>WhatsApp admin: <b>0812-0000-0000</b><br>Senin–Sabtu 08.00–17.00</p>');
+if(d.adv){const o=D.orders.find(x=>x.code===d.adv);o.stage++;o.eta=null;save();render();toast('Status: '+ST[o.stage]);return}
+if(d.cx)return dlg(`<h2>Batalkan pesanan?</h2><p class="mut">Pesanan ${d.cx} akan dibatalkan.</p><label for="rs">Alasan</label><select id="rs"><option>Jadwal berubah</option><option>Salah memilih layanan</option><option>Servis di tempat lain</option></select><button class="btn danger blk" style="margin-top:.8rem" data-cxok="${d.cx}">Ya, batalkan pesanan</button>`);
+if(d.cxok){D.orders.find(x=>x.code===d.cxok).stage=-1;save();$('#dlg').close();render();toast('Pesanan dibatalkan');return}
+if('saveprof' in d){const n=$('#pn').value.trim(),m=$('#pe').value.trim();if(!n||!/\S+@\S+/.test(m))return toast('Isi nama dan email yang valid');D.profile={nama:n,hp:$('#ph').value,email:m};save();render();toast('Profil disimpan');return}
+if('addm' in d){const n=$('#mn').value.trim(),p=$('#mp').value.trim().toUpperCase();if(!n||!p)return toast('Isi nama motor dan plat nomor');D.motors.push({id:Date.now(),nama:n,plat:p,main:false});save();render();toast('Motor ditambahkan');return}
+if(d.mk){D.motors.forEach(m=>m.main=m.id===+d.mk);save();render();toast('Motor utama diganti');return}
+if(d.md){D.motors=D.motors.filter(m=>m.id!==+d.md);save();render();return}
+if('pwd' in d){const a=$('#p1').value;if(a.length<8)return toast('Kata sandi minimal 8 karakter');if(a!==$('#p2').value)return toast('Kata sandi tidak sama');$('#p1').value=$('#p2').value='';toast('Kata sandi diubah');return}
+if('logout' in d){D=def();save();S.acct='profil';go('beranda');toast('Anda sudah keluar. Data demo direset.')}
+});
+document.addEventListener('input',e=>{if(e.target.id==='q'){S.q=e.target.value;render()}});
+$('#hs').addEventListener('keydown',e=>{if(e.key==='Enter'){S.q=e.target.value;S.cat='Semua';S.svc=null;go('layanan')}});
+addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
+render();
+</script>
+</body>
+</html>
