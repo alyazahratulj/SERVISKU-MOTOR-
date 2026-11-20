@@ -237,6 +237,7 @@ if('pwd' in d){const a=$('#p1').value;if(a.length<8)return toast('Kata sandi min
 if('logout' in d){D=def();save();S.acct='profil';go('beranda');toast('Anda sudah keluar. Data demo direset.')}
 });
 document.addEventListener('input',e=>{if(e.target.id==='q'){S.q=e.target.value;render()}});
+document.addEventListener('change',e=>{if(e.target.id==='ck'){S.ord.ok=e.target.checked;const b=$('[data-next]');if(b)b.disabled=!e.target.checked}});
 $('#hs').addEventListener('keydown',e=>{if(e.key==='Enter'){S.q=e.target.value;S.cat='Semua';S.svc=null;go('layanan')}});
 addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
 render();
